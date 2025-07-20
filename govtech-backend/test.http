@@ -1,0 +1,57 @@
+### Test création citoyen - POST /api/citizens/register
+POST http://127.0.0.1:5050/api/citizens/register
+Content-Type: application/json
+
+{
+  "nom": "Mbemba",
+  "postnom": "Kanza",
+  "prenom": "Jean-Luc",
+  "motDePasse": "MotDePasse123",
+  "date_naissance": "1995-04-15",
+  "genre": "Masculin",
+  "commune": "Gombe",
+  "adresse": "Avenue Gombe",
+  "numeroTel": "+243900000000",
+  "provinceCode": "KIN"
+}
+### Test récupération liste citoyens - GET /api/citizens
+GET http://127.0.0.1:5050/api/citizens
+
+### Test connexion citoyen - POST /api/citizens/login
+POST http://127.0.0.1:5050/api/citizens/login
+Content-Type: application/json
+
+{
+  "nuc": "KIN9504158321",
+  "motDePasse": "MotDePasse123"
+}
+### Test profil citoyen protégé - GET /api/citizens/profile
+GET http://127.0.0.1:5050/api/citizens/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgxNjQwZmU5LWMxMmUtNGNmMC1iMDg2LWI0OTczMGFjNmFhOSIsIm51YyI6IktJTjk1MDQxNTgzMjEiLCJpYXQiOjE3NTMwMDgzNzAsImV4cCI6MTc1MzAxMTk3MH0.wOFgc4L0zMKB2UplOQKBTTPhirug-75hIsMhOHq8usM
+
+
+### Test profil admin protégé - GET /api/citizens/profile
+POST http://localhost:5050/api/admin/create-admin
+Content-Type: application/json
+
+{
+  "nom": "Admin",
+  "postnom": "Principal",
+  "prenom": "Jean-Luc",
+  "motDePasse": "AdminStrongPass123",
+  "date_naissance": "1985-06-01",
+  "genre": "Masculin",
+  "commune": "Gombe",
+  "adresse": "Boulevard du Gouvernement",
+  "numeroTel": "+243900000999",
+  "provinceCode": "KIN"
+}
+
+### Test connexion admin - POST /api/citizens/login
+POST http://127.0.0.1:5050/api/citizens/login
+Content-Type: application/json
+
+{
+  "nuc": "KIN8506015387",
+  "motDePasse": "AdminStrongPass123"
+}

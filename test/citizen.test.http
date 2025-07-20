@@ -1,0 +1,39 @@
+### 🔹 Tester la création d’un citoyen
+### Test Register Citizen
+POST http://localhost:5000/api/citizens/register
+Content-Type: application/json
+
+{
+  "nom": "Mbemba",
+  "postnom": "Kanza",
+  "prenom": "Jean-Luc",
+  "numero_identification": "CIT243123456789",
+  "date_naissance": "1995-04-15",
+  "genre": "Masculin",
+  "commune": "Gombe"
+}
+
+
+### 🔹 Obtenir tous les citoyens
+GET http://localhost:5000/api/citizens
+
+### 🔹 Obtenir un citoyen par ID
+GET http://localhost:5000/api/citizens/1
+
+### 🔹 Modifier un citoyen
+PUT http://localhost:5000/api/citizens/1
+Content-Type: application/json
+
+{
+  "nom": "Mbemba",
+  "postnom": "Mutombo",
+  "prenom": "Jean-Luc",
+  "email": "jeanluc@example.com",
+  "motDePasse": "motdepasse123",
+  "dateNaissance": "1995-04-15",
+  "adresse": "Avenue Kasa-Vubu",
+  "numeroTel": "+243970000000"
+}
+
+### 🔹 Supprimer un citoyen
+DELETE http://localhost:5000/api/citizens/1

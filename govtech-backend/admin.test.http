@@ -1,0 +1,51 @@
+### 1. Création d’un administrateur
+POST http://localhost:5050/api/admin/create-admin
+Content-Type: application/json
+
+{
+  "nom": "Admin",
+  "postnom": "Principal",
+  "prenom": "Jean-Luc",
+  "motDePasse": "AdminStrongPass123!",
+  "date_naissance": "1980-01-01",
+  "genre": "Masculin",
+  "commune": "Gombe",
+  "adresse": "Avenue de l’Admin",
+  "numeroTel": "+243900000111",
+  "provinceCode": "KIN"
+}
+
+###
+
+### 2. Connexion de l’administrateur (récupération du token)
+
+POST http://localhost:5050/api/citizens/login
+Content-Type: application/json
+
+{
+  "nuc": "KIN8001011690",
+  "motDePasse": "AdminStrongPass123!"
+}
+
+###
+
+### 3. Liste de tous les citoyens (avec token dynamique)
+GET http://localhost:5050/api/admin/citizens
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkyMzdhZmIyLTNiOWItNGIwYi05NWRhLTcyNTI3ZDM1YzM3YiIsIm51YyI6IktJTjgwMDEwMTczNzMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTMwMTA2NjYsImV4cCI6MTc1MzAxNDI2Nn0.BsdZq9K2Sjg76a-kUHUWkPOWBVA2eTedsp46TqPzBXo
+
+###
+
+### 4. Modifier le rôle d’un citoyen (remplace ID_CITOYEN)
+PUT http://localhost:5050/api/admin/citizens/1ab37ae4-70cc-4d52-89a7-2dabfa79139f/role
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkyMzdhZmIyLTNiOWItNGIwYi05NWRhLTcyNTI3ZDM1YzM3YiIsIm51YyI6IktJTjgwMDEwMTczNzMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTMwMTA2NjYsImV4cCI6MTc1MzAxNDI2Nn0.BsdZq9K2Sjg76a-kUHUWkPOWBVA2eTedsp46TqPzBXo
+Content-Type: application/json
+
+{
+  "role": "admin"
+}
+
+###
+
+### 5. Supprimer un citoyen (remplace ID_CITOYEN)
+DELETE http://localhost:5050/api/admin/citizens/1ab37ae4-70cc-4d52-89a7-2dabfa79139f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkyMzdhZmIyLTNiOWItNGIwYi05NWRhLTcyNTI3ZDM1YzM3YiIsIm51YyI6IktJTjgwMDEwMTczNzMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTMwMTA2NjYsImV4cCI6MTc1MzAxNDI2Nn0.BsdZq9K2Sjg76a-kUHUWkPOWBVA2eTedsp46TqPzBXo
