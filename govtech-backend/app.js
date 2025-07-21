@@ -66,6 +66,7 @@ app.use('/api/passeports', passportRoutes);
 app.use('/api/casiers', casierJudiciaireRoutes);
 app.use('/api/permis', permisRoutes);
 app.use('/api/carte-grise', carteGriseRoutes);
+app.use('/api/auth', citizenRoutes);
 // app.use('/api/identite', identiteRoutes); // à réactiver si nécessaire
 
 // 🌍 Route test

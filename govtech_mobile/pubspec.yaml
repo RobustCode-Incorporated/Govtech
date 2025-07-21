@@ -1,0 +1,51 @@
+name: govtech_mobile
+description: Application mobile citoyenne pour le système GovTech national.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.4.0
+  provider: ^6.1.2
+  
+
+  # 🧠 État global
+  flutter_riverpod: ^2.4.0
+
+  # 🔐 Stockage sécurisé pour le JWT
+  flutter_secure_storage: ^9.0.0
+
+  # 🌐 Requêtes HTTP
+  dio: ^5.3.2
+
+  # 🎨 Fonts modernes
+  google_fonts: ^6.1.0
+
+  # 🧭 Navigation
+  go_router: ^13.0.0
+
+  # 📱 Responsive UI
+  flutter_screenutil: ^5.9.0
+
+  # 📦 JSON parsing (modèles)
+  json_annotation: ^4.8.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # 🧰 Génération de code
+  build_runner: ^2.4.7
+  json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
