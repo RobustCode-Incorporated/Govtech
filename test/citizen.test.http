@@ -37,3 +37,20 @@ Content-Type: application/json
 
 ### 🔹 Supprimer un citoyen
 DELETE http://localhost:5000/api/citizens/1
+
+### Soumission d'une demande de mariage par un citoyen
+POST http://172.20.10.7:5050/api/citizen/mariages
+Content-Type: application/json
+Authorization: Bearer 
+flutter: Body: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlYzVmMmE0LWU4NDQtNGY2Zi1hMWNmLWQ0YzBiMWZiNGViYiIsIm51YyI6IktJTjU2MTIxNjcxMzkiLCJyb2xlIjoiY2l0b3llbiIsImlhdCI6MTc1MzE5NjQzNywiZXhwIjoxNzUzMjAwMDM3fQ.b8S7LhQvd3asUpw-CPkTQ_EQVsXZ985TBunt4CZA99Y","user":{"id":"8ec5f2a4-e844-4f6f-a1cf-d4c0b1fb4ebb"
+
+{
+  "epoux_prenom": "Jean",
+  "epoux_postnom": "Luc",
+  "epoux_nom": "Luzemba",
+  "epouse_prenom": "Marie",
+  "epouse_postnom": "Claire",
+  "epouse_nom": "Kaba",
+  "date_mariage": "2024-06-21",
+  "lieu_mariage": "Kinshasa"
+}

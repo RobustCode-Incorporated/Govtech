@@ -4,20 +4,9 @@ require('dotenv').config();
 // 🔧 Importations des modules
 const express = require('express');
 const bodyParser = require('body-parser');
-const sequelize = require('./config/database');
 
-// 📦 Import des modèles (avant sequelize.sync)
-const Citoyen = require('./models/Citoyen');
-const AgentPermission = require('./models/AgentPermission');
-const Naissance = require('./models/Naissance');
-const Mariage = require('./models/Mariage');
-const Deces = require('./models/Deces');
-const Residence = require('./models/Residence');
-const Passeport = require('./models/Passeport');
-const CasierJudiciaire = require('./models/CasierJudiciaire');
-const PermisConduire = require('./models/PermisConduire');
-const CarteGrise = require('./models/CarteGrise');
-// const Identite = require('./models/Identite'); // (optionnel pour plus tard)
+// 📦 Import des modèles via index.js
+const db = require('./models'); // ✅ Centralisation ici
 
 // 📦 Import des routes
 const citizenRoutes = require('./routes/citizenRoutes');
@@ -30,6 +19,8 @@ const passportRoutes = require('./routes/passeportRoutes');
 const casierJudiciaireRoutes = require('./routes/casierJudiciaireRoutes');
 const permisRoutes = require('./routes/permisConduireRoutes');
 const carteGriseRoutes = require('./routes/carteGriseRoutes');
+const requestRoutes = require('./routes/requestRoutes');
+const citizenMariageRoutes = require('./routes/citizenMariageRoutes');
 // const identiteRoutes = require('./routes/identiteRoutes'); // (optionnel pour plus tard)
 
 // 🚀 Initialisation de l'app
@@ -42,12 +33,12 @@ app.use((req, res, next) => {
 });
 
 // 🔌 Connexion à la base de données
-sequelize.authenticate()
+db.sequelize.authenticate()
   .then(() => console.log('🟢 Connexion à PostgreSQL réussie'))
   .catch(err => console.error('🔴 Erreur connexion DB', err));
 
 // 🧱 Synchronisation des modèles Sequelize
-sequelize.sync({ force: true }) // ⛔ À désactiver en production
+db.sequelize.sync({ force: true }) // ⚠️ désactive force:true en production !
   .then(() => console.log('🛠️ Tables synchronisées'))
   .catch(err => console.error('❌ Erreur sync:', err));
 
@@ -66,7 +57,9 @@ app.use('/api/passeports', passportRoutes);
 app.use('/api/casiers', casierJudiciaireRoutes);
 app.use('/api/permis', permisRoutes);
 app.use('/api/carte-grise', carteGriseRoutes);
-app.use('/api/auth', citizenRoutes);
+app.use('/api/auth', citizenRoutes); // 🔁 Si tu veux que login/register passent aussi ici
+app.use('/api', requestRoutes);
+app.use('/api/citizen/mariages', citizenMariageRoutes);
 // app.use('/api/identite', identiteRoutes); // à réactiver si nécessaire
 
 // 🌍 Route test

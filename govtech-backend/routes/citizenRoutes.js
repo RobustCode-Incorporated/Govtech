@@ -1,16 +1,15 @@
-// routes/citizenRoutes.js
-
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Citizen = require('../models/Citoyen'); // <-- corrige ici, pas de destructuration
-const generateNUC = require('../utils/generateNUC'); // Assure que ce chemin est correct
+const Citizen = require('../models/Citoyen');
+const generateNUC = require('../utils/generateNUC');
+const authMiddleware = require('../middlewares/authMiddleware');
 
-// Route POST /register
+// 🔹 POST /api/citizens/register
 router.post('/register', async (req, res) => {
   try {
-    console.log("✅ Requête reçue:", req.body);
+    console.log("✅ Requête d'inscription reçue:", req.body);
 
     const {
       nom,
@@ -26,15 +25,16 @@ router.post('/register', async (req, res) => {
       role
     } = req.body;
 
+    // 🔒 Vérification des champs obligatoires
     if (!nom || !prenom || !motDePasse || !date_naissance) {
       return res.status(400).json({
-        message: 'Nom, prénom, motDePasse et date de naissance sont obligatoires.'
+        message: 'Nom, prénom, mot de passe et date de naissance sont obligatoires.'
       });
     }
 
     const provCode = provinceCode || 'KIN';
 
-    // Générer un NUC unique
+    // 🔄 Générer un NUC unique
     let nuc;
     let exists = true;
     do {
@@ -56,7 +56,7 @@ router.post('/register', async (req, res) => {
       commune,
       adresse,
       numeroTel,
-      role: role || 'citoyen'
+      role: role || 'citoyen',
     });
 
     const token = jwt.sign(
@@ -74,12 +74,43 @@ router.post('/register', async (req, res) => {
         nom: newCitizen.nom,
         postnom: newCitizen.postnom,
         prenom: newCitizen.prenom,
-        role: newCitizen.role
+        role: newCitizen.role,
       }
     });
   } catch (error) {
-    console.error('💥 Erreur inscription:', error);
+    console.error('💥 Erreur inscription citoyen:', error);
     res.status(500).json({ message: 'Erreur serveur lors de l\'inscription' });
+  }
+});
+
+// 🔹 GET /api/citizens/profile — Profil du citoyen connecté (protégé)
+router.get('/profile', authMiddleware(['citoyen', 'admin', 'agent']), async (req, res) => {
+  try {
+    const citizenId = req.user.id;
+    const citizen = await Citizen.findByPk(citizenId);
+
+    if (!citizen) {
+      return res.status(404).json({ message: 'Citoyen non trouvé' });
+    }
+
+    res.status(200).json({
+      citizen: {
+        id: citizen.id,
+        nuc: citizen.nuc,
+        nom: citizen.nom,
+        postnom: citizen.postnom,
+        prenom: citizen.prenom,
+        genre: citizen.genre,
+        date_naissance: citizen.date_naissance,
+        role: citizen.role,
+        commune: citizen.commune,
+        adresse: citizen.adresse,
+        numeroTel: citizen.numeroTel
+      }
+    });
+  } catch (error) {
+    console.error('💥 Erreur récupération profil citoyen:', error);
+    res.status(500).json({ message: 'Erreur serveur lors de la récupération du profil' });
   }
 });
 

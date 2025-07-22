@@ -82,7 +82,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 _buildField('Rôle', data['role']),
                 _buildField('Genre', data['genre']),
                 _buildField('Date de naissance', data['date_naissance']),
-                // Ajoute d’autres champs si nécessaire
+                const SizedBox(height: 20),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.list_alt),
+                  label: const Text('Mes demandes'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/requests');
+                  },
+                ),
               ],
             ),
           );

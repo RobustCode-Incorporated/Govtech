@@ -11,7 +11,9 @@ class AuthRepository {
 
   // 🔐 Connexion
   Future<UserModel> login(String nuc, String password) async {
-    final url = Uri.parse('$baseUrl/auth/login');
+    final cleanBaseUrl = baseUrl.replaceAll(RegExp(r'/+$'), '');
+    final url = Uri.parse('$cleanBaseUrl/auth/login');
+
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -31,7 +33,9 @@ class AuthRepository {
 
   // 🧾 Enregistrement
   Future<UserModel> register(Map<String, dynamic> formData) async {
-    final url = Uri.parse('$baseUrl/auth/register');
+    final cleanBaseUrl = baseUrl.replaceAll(RegExp(r'/+$'), '');
+    final url = Uri.parse('$cleanBaseUrl/auth/register');
+
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

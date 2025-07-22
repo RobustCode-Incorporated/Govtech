@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InputField extends StatelessWidget {
   final String label;
@@ -7,6 +8,7 @@ class InputField extends StatelessWidget {
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
   final int maxLines;
+  final List<TextInputFormatter>? inputFormatters;
 
   const InputField({
     super.key,
@@ -16,6 +18,7 @@ class InputField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.validator,
     this.maxLines = 1,
+    this.inputFormatters,
   });
 
   @override
@@ -31,6 +34,7 @@ class InputField extends StatelessWidget {
           obscureText: isPassword,
           keyboardType: keyboardType,
           validator: validator,
+          inputFormatters: inputFormatters,
           maxLines: maxLines,
           decoration: InputDecoration(
             border: OutlineInputBorder(

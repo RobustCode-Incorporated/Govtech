@@ -14,7 +14,7 @@ class ProfileRepository {
     final token = await authRepo.getToken(); // 🔐 Récupérer le token sécurisé
 
     final response = await http.get(
-      Uri.parse('$baseUrl/api/citizens/profile'),
+      Uri.parse('$baseUrl/citizens/profile'),
       headers: {
         'Content-Type': 'application/json',
         if (token != null) 'Authorization': 'Bearer $token', // ✅ Ajout conditionnel du token

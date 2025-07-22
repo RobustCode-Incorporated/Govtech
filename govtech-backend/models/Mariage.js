@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Citoyen = require('./Citoyen'); // Assure-toi que ce modèle existe
 
 const Mariage = sequelize.define('Mariage', {
   id: {
@@ -45,11 +46,18 @@ const Mariage = sequelize.define('Mariage', {
   },
   agentId: {
     type: DataTypes.UUID,
-    allowNull: false,
+    allowNull: true, // Devient facultatif si un citoyen peut créer aussi
+  },
+  citoyenId: {
+    type: DataTypes.UUID,
+    allowNull: true, // Devient requis côté logique si la demande vient du citoyen
   },
 }, {
   tableName: 'mariages',
   timestamps: true,
 });
+
+// 🔗 Définir la relation avec Citoyen
+Mariage.belongsTo(Citoyen, { foreignKey: 'citoyenId', as: 'citoyen' });
 
 module.exports = Mariage;
